@@ -11,6 +11,7 @@ jobs:
       $versionSuffixBRANCH = "$branchName-$buildId";
       $isTag = "$env:BUILD_SOURCEBRANCH".StartsWith('refs/tags/');
       $isPR = "$env:SYSTEM_PULLREQUEST_PULLREQUESTID" -ne ""
+      Write-Host "PR '$env:SYSTEM_PULLREQUEST_PULLREQUESTID', branch = '$env:BUILD_SOURCEBRANCH', branchName '$env:BUILD_SOURCEBRANCHNAME'";
       $versionSuffix = if ($isTag) { "" } else { if ($isPR) { $versionSuffixPR } else { $versionSuffixBRANCH } };
       Write-Host "##vso[task.setvariable variable=VersionSuffix]$versionSuffix";
   - script: dotnet pack build.proj -v n
