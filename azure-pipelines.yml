@@ -9,7 +9,7 @@ jobs:
       $versionSuffixPR = "PR$($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER)-$buildId";
       $branchName = "$env:BUILD_SOURCEBRANCHNAME".Replace("_","");
       $versionSuffixBRANCH = "$branchName-$buildId";
-      $isTag = $branchName.StartsWith('refs/tags/');
+      $isTag = "$env:BUILD_SOURCEBRANCH".StartsWith('refs/tags/');
       $versionSuffix = if ($isTag) { "" } else { if ("$env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER" -ne "") { $versionSuffixPR } else { $versionSuffixBRANCH } };
       Write-Host "##vso[task.setvariable variable=VersionSuffix]$versionSuffix";
   - script: dotnet pack build.proj -v n
